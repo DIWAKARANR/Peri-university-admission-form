@@ -149,7 +149,7 @@ function setupDynamicDepartments() {
         'bcom': ['General','Accounting', 'Finance', 'Banking','others'],
         'ba': ['English', 'History', 'Economics', 'Psychology'],
         'bca': ['Computer Applications', 'Software Development']
-        'b.e':['Computer science,'Mechanical','EEE','others']
+        'B.E':['Computer science,'Mechanical','EEE','others']
     };
 
     document.getElementById('degree').addEventListener('change', function() {
