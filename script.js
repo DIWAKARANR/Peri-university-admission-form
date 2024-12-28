@@ -1,4 +1,4 @@
-// Form navigation
+// Form navigation variables
 let currentSection = 1;
 const totalSections = 5;
 const form = document.getElementById('registrationForm');
@@ -12,10 +12,10 @@ const submitBtn = document.querySelector('.submit-btn');
 function initForm() {
     createPageDots();
     updateFormNavigation();
-    sections[0].classList.add('active');
     updateProgress();
     setupPasswordToggles();
     setupDynamicDepartments();
+    setupFormValidation();
 }
 
 // Create page dots
@@ -63,11 +63,45 @@ function navigateSection(direction) {
     updateProgress();
 }
 
-// Setup event listeners
-nextBtn.addEventListener('click', () => navigateSection('next'));
-prevBtn.addEventListener('click', () => navigateSection('prev'));
+// Setup password toggles
+function setupPasswordToggles() {
+    document.querySelectorAll('.toggle-password').forEach(toggle => {
+        toggle.addEventListener('click', function() {
+            const input = this.previousElementSibling;
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+}
 
-// Validate current section
+// Setup dynamic departments
+function setupDynamicDepartments() {
+    const departmentsByDegree = {
+        'bsc': ['Computer Science', 'Mathematics', 'Physics', 'Chemistry', 'Microbiology'],
+        'bcom': ['General', 'Accounting', 'Finance', 'Banking', 'others'],
+        'ba': ['English', 'History', 'Economics', 'Psychology'],
+        'bca': ['Computer Applications', 'Software Development'],
+        'B.E': ['Computer Science', 'Mechanical', 'EEE', 'others']
+    };
+
+    document.getElementById('degree').addEventListener('change', function() {
+        const departmentSelect = document.getElementById('department');
+        departmentSelect.innerHTML = '<option value="">Select Department</option>';
+        
+        if (this.value && departmentsByDegree[this.value]) {
+            departmentsByDegree[this.value].forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept.toLowerCase().replace(/\s+/g, '-');
+                option.textContent = dept;
+                departmentSelect.appendChild(option);
+            });
+        }
+    });
+}
+
+// Validate section
 function validateSection(section) {
     let isValid = true;
     const inputs = section.querySelectorAll('input, select, textarea');
@@ -94,7 +128,7 @@ function validateSection(section) {
     return isValid;
 }
 
-// Field validation functions
+// Validation helper functions
 function validateEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -107,12 +141,17 @@ function validatePassword(password) {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/.test(password);
 }
 
-// Error handling
+// Mark field error
 function markFieldError(field, message) {
     field.classList.add('error');
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
     errorDiv.textContent = message;
+    
+    // Remove existing error message if any
+    const existingError = field.parentNode.querySelector('.error-message');
+    if (existingError) existingError.remove();
+    
     field.parentNode.appendChild(errorDiv);
     
     field.addEventListener('input', function() {
@@ -122,68 +161,30 @@ function markFieldError(field, message) {
     }, { once: true });
 }
 
-// Animation for invalid section
+// Shake animation for invalid section
 function shakePage() {
-    const currentSection = document.querySelector(`.form-section[data-section="${currentSection}"]`);
-    currentSection.classList.add('shake');
-    setTimeout(() => currentSection.classList.remove('shake'), 500);
+    const currentSectionEl = document.querySelector(`.form-section[data-section="${currentSection}"]`);
+    currentSectionEl.classList.add('shake');
+    setTimeout(() => currentSectionEl.classList.remove('shake'), 500);
 }
 
-// Password visibility toggle
-function setupPasswordToggles() {
-    document.querySelectorAll('.toggle-password').forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const input = this.previousElementSibling;
-            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-            input.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-    });
-}
-
-// Dynamic department options
-function setupDynamicDepartments() {
-    const departmentsByDegree = {
-        'bsc': ['Computer Science', 'Mathematics', 'Physics', 'Chemistry','Microbiology'],
-        'bcom': ['General','Accounting', 'Finance', 'Banking','others'],
-        'ba': ['English', 'History', 'Economics', 'Psychology'],
-        'bca': ['Computer Applications', 'Software Development'],
-        'B.E': ['Computer science','Mechanical','EEE','others']
-    };
-
-    document.getElementById('degree').addEventListener('change', function() {
-        const departmentSelect = document.getElementById('department');
-        departmentSelect.innerHTML = '<option value="">Select Department</option>';
+// Form submission
+function setupFormValidation() {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
         
-        if (this.value) {
-            departmentsByDegree[this.value].forEach(dept => {
-                const option = document.createElement('option');
-                option.value = dept.toLowerCase().replace(/\s+/g, '-');
-                option.textContent = dept;
-                departmentSelect.appendChild(option);
-            });
+        if (!document.getElementById('declaration').checked) {
+            alert('Please accept the declaration to proceed');
+            return;
+        }
+        
+        if (validateSection(document.querySelector(`.form-section[data-section="${currentSection}"]`))) {
+            showSuccessModal();
         }
     });
 }
 
-// Form submission
-function validateForm(event) {
-    event.preventDefault();
-    
-    if (!document.getElementById('declaration').checked) {
-        alert('Please accept the declaration to proceed');
-        return false;
-    }
-    
-    if (validateSection(document.querySelector(`.form-section[data-section="${currentSection}"]`))) {
-        showSuccessModal();
-    }
-    
-    return false;
-}
-
-// Success modal
+// Success modal functions
 function showSuccessModal() {
     const modal = document.getElementById('successModal');
     const registrationId = generateRegistrationId();
@@ -198,13 +199,17 @@ function closeModal() {
     window.location.reload();
 }
 
-// Generate unique registration ID
+// Generate registration ID
 function generateRegistrationId() {
     const date = new Date();
     const year = date.getFullYear().toString().substr(-2);
     const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-    return `MU${year}${random}`;
+    return `PERI${year}${random}`;
 }
+
+// Setup navigation buttons
+nextBtn.addEventListener('click', () => navigateSection('next'));
+prevBtn.addEventListener('click', () => navigateSection('prev'));
 
 // Close modal on outside click
 window.onclick = function(event) {
