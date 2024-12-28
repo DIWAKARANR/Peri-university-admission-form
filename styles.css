@@ -51,7 +51,6 @@ body {
     padding: 20px;
     text-align: center;
     color: white;
-    position: relative;
 }
 
 .university-logo {
@@ -64,12 +63,8 @@ body {
 }
 
 @keyframes logo-spin {
-    from {
-        transform: rotateY(180deg);
-    }
-    to {
-        transform: rotateY(0);
-    }
+    from { transform: rotateY(180deg); }
+    to { transform: rotateY(0); }
 }
 
 .progress-bar {
@@ -88,8 +83,8 @@ body {
 }
 
 .form-section {
-    padding: 30px;
     display: none;
+    padding: 30px;
     animation: section-appear 0.5s ease;
 }
 
@@ -119,6 +114,7 @@ h2 i {
 
 .form-group {
     margin-bottom: 20px;
+    position: relative;
 }
 
 .form-row {
@@ -134,7 +130,7 @@ label {
     font-weight: 500;
 }
 
-.animate-input {
+input, select, textarea {
     width: 100%;
     padding: 12px;
     border: 2px solid #e0e0e0;
@@ -143,10 +139,10 @@ label {
     transition: var(--transition);
 }
 
-.animate-input:focus {
+input:focus, select:focus, textarea:focus {
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
     outline: none;
+    box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
 }
 
 .password-input {
@@ -162,14 +158,22 @@ label {
     color: #666;
 }
 
+small {
+    display: block;
+    color: #666;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
 .declaration-box {
     background: var(--light-gray);
     padding: 20px;
     border-radius: 8px;
-    margin: 20px 30px;
+    margin: 20px 0;
 }
 
 .declaration-box input[type="checkbox"] {
+    width: auto;
     margin-right: 10px;
 }
 
@@ -236,18 +240,6 @@ label {
     color: var(--error-color);
     font-size: 12px;
     margin-top: 5px;
-    animation: error-appear 0.3s ease;
-}
-
-@keyframes error-appear {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .modal {
@@ -301,7 +293,6 @@ footer {
         border-radius: 10px;
     }
 
-@media (max-width: 768px) {
     .form-section {
         padding: 20px;
     }
@@ -311,6 +302,9 @@ footer {
         gap: 15px;
     }
 
+    /* Continuing from the previous CSS... */
+
+@media (max-width: 768px) {
     .page-dots {
         order: -1;
         margin-bottom: 15px;
@@ -320,20 +314,14 @@ footer {
         width: 100%;
     }
 
-    .declaration-box {
+    .modal-content {
         margin: 20px;
+        padding: 20px;
     }
-}
 
-/* Custom Animations */
-@keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    75% { transform: translateX(10px); }
-}
-
-.shake {
-    animation: shake 0.5s ease-in-out;
+    .form-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Field Status Indicators */
@@ -371,4 +359,15 @@ footer {
 .strength-strong {
     background: var(--success-color);
     width: 100%;
+}
+
+/* Animation for invalid fields */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.shake {
+    animation: shake 0.5s ease-in-out;
 }
