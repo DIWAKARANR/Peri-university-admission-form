@@ -145,11 +145,11 @@ function setupPasswordToggles() {
 // Dynamic department options
 function setupDynamicDepartments() {
     const departmentsByDegree = {
-        'bsc': ['Computer Science', 'Mathematics', 'Physics', 'Chemistry','microbiology'],
+        'bsc': ['Computer Science', 'Mathematics', 'Physics', 'Chemistry','Microbiology'],
         'bcom': ['General','Accounting', 'Finance', 'Banking','others'],
         'ba': ['English', 'History', 'Economics', 'Psychology'],
-        'bca': ['Computer Applications', 'Software Development']
-        'B.E':['Computer science,'Mechanical','EEE','others']
+        'bca': ['Computer Applications', 'Software Development'],
+        'B.E': ['Computer science','Mechanical','EEE','others']
     };
 
     document.getElementById('degree').addEventListener('change', function() {
