@@ -17,34 +17,36 @@
             </div>
         </div>
 
-        <form id="registrationForm" onsubmit="return validateForm(event)">
-            <div class="form-section" data-section="1">
+        <form id="registrationForm">
+            <!-- Section 1: Personal Information -->
+            <div class="form-section active" data-section="1">
                 <h2><i class="fas fa-user"></i> Personal Information</h2>
                 <div class="form-group">
                     <label for="name">Full Name*</label>
-                    <input type="text" id="name" required class="animate-input">
+                    <input type="text" id="name" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="age">Age*</label>
-                        <input type="number" id="age" min="16" max="60" required class="animate-input">
+                        <input type="number" id="age" min="16" max="60" required>
                     </div>
                     <div class="form-group">
                         <label for="dob">Date of Birth*</label>
-                        <input type="date" id="dob" required class="animate-input">
+                        <input type="date" id="dob" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="fatherName">Father's Name*</label>
-                    <input type="text" id="fatherName" required class="animate-input">
+                    <input type="text" id="fatherName" required>
                 </div>
             </div>
 
+            <!-- Section 2: Academic Information -->
             <div class="form-section" data-section="2">
                 <h2><i class="fas fa-graduation-cap"></i> Academic Information</h2>
                 <div class="form-group">
                     <label for="degree">Degree Program*</label>
-                    <select id="degree" required class="animate-input">
+                    <select id="degree" required>
                         <option value="">Select Degree</option>
                         <option value="bsc">B.Sc</option>
                         <option value="bcom">B.Com</option>
@@ -56,23 +58,24 @@
                 </div>
                 <div class="form-group">
                     <label for="marks12">12th Marks (%)*</label>
-                    <input type="number" id="marks12" min="0" max="100" required class="animate-input">
+                    <input type="number" id="marks12" min="0" max="100" required>
                 </div>
                 <div class="form-group">
                     <label for="school12">12th School*</label>
-                    <input type="text" id="school12" required class="animate-input">
+                    <input type="text" id="school12" required>
                 </div>
                 <div class="form-group">
                     <label for="board12">12th Board*</label>
-                    <input type="text" id="board12" required class="animate-input">
+                    <input type="text" id="board12" required>
                 </div>
             </div>
 
+            <!-- Section 3: Institution Details -->
             <div class="form-section" data-section="3">
                 <h2><i class="fas fa-building"></i> Institution Details</h2>
                 <div class="form-group">
                     <label for="college">Colleges @ PERI*</label>
-                    <select id="college" required class="animate-input">
+                    <select id="college" required>
                         <option value="">Select College according to your desire course</option>
                         <option value="college1">Arts and Science College</option>
                         <option value="college2">Engineering College</option>
@@ -82,38 +85,38 @@
                 </div>
                 <div class="form-group">
                     <label for="department">Department*</label>
-                    <select id="department" required class="animate-input">
+                    <select id="department" required>
                         <option value="">Select Department</option>
                     </select>
                 </div>
             </div>
 
+            <!-- Section 4: Contact Information -->
             <div class="form-section" data-section="4">
                 <h2><i class="fas fa-address-card"></i> Contact Information</h2>
                 <div class="form-group">
                     <label for="email">Email Address*</label>
-                    <input type="email" id="email" required class="animate-input"
-                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
-                    <small>Example: diwakaranrukmangathan@gmail.com</small>
+                    <input type="email" id="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                    <small>Example: example@email.com</small>
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone Number*</label>
-                    <input type="tel" id="phone" required class="animate-input"
-                           pattern="[0-9]{10}">
-                    <small>Example: 6379978160</small>
+                    <input type="tel" id="phone" required pattern="[0-9]{10}">
+                    <small>Example: 1234567890</small>
                 </div>
                 <div class="form-group">
                     <label for="address">Permanent Address*</label>
-                    <textarea id="address" rows="3" required class="animate-input"></textarea>
+                    <textarea id="address" rows="3" required></textarea>
                 </div>
             </div>
 
+            <!-- Section 5: Account Security -->
             <div class="form-section" data-section="5">
                 <h2><i class="fas fa-lock"></i> Account Security</h2>
                 <div class="form-group">
                     <label for="password">Create Password*</label>
                     <div class="password-input">
-                        <input type="password" id="password" required class="animate-input">
+                        <input type="password" id="password" required>
                         <i class="fas fa-eye toggle-password"></i>
                     </div>
                     <small>Password must be 8-20 characters with letters, numbers & symbols</small>
@@ -121,13 +124,10 @@
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password*</label>
                     <div class="password-input">
-                        <input type="password" id="confirmPassword" required class="animate-input">
+                        <input type="password" id="confirmPassword" required>
                         <i class="fas fa-eye toggle-password"></i>
                     </div>
                 </div>
-            </div>
-
-            <div class="declaration-section">
                 <div class="declaration-box">
                     <input type="checkbox" id="declaration" required>
                     <label for="declaration">
@@ -146,7 +146,7 @@
         </form>
 
         <footer>
-            <p>© 2024 Madras University | Developed by Diwakaran</p>
+            <p>© 2024 PERI University | Developed by Diwakaran</p>
         </footer>
     </div>
 
